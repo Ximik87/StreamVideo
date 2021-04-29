@@ -1,25 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Data;
-using System.Windows.Media.Imaging;
 using Streaming.Core;
+using Streaming.Core.Interfaces;
+using Streaming.WpfApp.Models;
 
 namespace Streaming.WpfApp
 {
     class BackgroundProcess
     {
-        private Stream _empty;
-        private Stream _frame1;
-        private Stream _frame2;
+        private Stream _emptyFrame;
         private readonly ObservableCollection<CameraData> _cameras;
-        private List<ISeparateCameraProcess> _consumers;
-        private ILinkContainer _linkContainer;
+        private readonly List<ISeparateCameraProcess> _consumers;
+        private readonly ILinkContainer _linkContainer;
 
         public BackgroundProcess(ObservableCollection<CameraData> cameras, ILinkContainer linkContainer)
         {
@@ -33,24 +28,25 @@ namespace Streaming.WpfApp
         private void Init()
         {
             // todo implement beautiful
-            _empty = StreamHelper.GetStream(@"d:\empty.jpg");
-            _frame1 = StreamHelper.GetStream(@"d:\qqqq.jpg");
-            _frame2 = StreamHelper.GetStream(@"d:\qqqq2.jpg");
+            _emptyFrame = StreamHelper.GetStream(@"d:\empty.jpg");
 
-            _cameras.Add(new CameraData { Name = "firstCamera", Image = _empty });
-            _cameras.Add(new CameraData { Name = "secondCamera", Image = _empty });
-            _cameras.Add(new CameraData { Name = "thirdCamera", Image = _empty });
-            _cameras.Add(new CameraData { Name = "4Camera", Image = _empty });
-
-            //Task.Factory.StartNew(() => DowWork(), TaskCreationOptions.LongRunning);
+            foreach (var item in _linkContainer.CameraInfos)
+            {
+                _cameras.Add(new CameraData
+                {
+                    Name = item.Name,
+                    Url = item.Url,
+                    Image = _emptyFrame
+                });
+            }
         }
 
         private void Test()
         {
-            foreach (var item in _cameras)
-            {              
-                var stub = new VideoConsumerStub(item.Url);
-                var consumer = new SeparateCameraProcess(stub, item);
+            foreach (var camera in _cameras)
+            {
+                var stub = new VideoConsumerStub(camera.Url);
+                var consumer = new SeparateCameraProcess(stub, camera);
                 consumer.Start();
                 _consumers.Add(consumer);
             }

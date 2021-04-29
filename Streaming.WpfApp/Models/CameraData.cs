@@ -2,9 +2,9 @@
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
-using Streaming.Core;
+using Streaming.Core.Interfaces;
 
-namespace Streaming.WpfApp
+namespace Streaming.WpfApp.Models
 {
     public class CameraData : INotifyPropertyChanged, ICameraData
     {

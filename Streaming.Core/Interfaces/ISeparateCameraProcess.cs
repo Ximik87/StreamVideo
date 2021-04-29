@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Streaming.Core
+namespace Streaming.Core.Interfaces
 {
     public interface ISeparateCameraProcess
     {

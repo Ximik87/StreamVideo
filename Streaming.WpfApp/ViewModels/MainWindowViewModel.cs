@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using Streaming.WpfApp.Models;
 
-namespace Streaming.WpfApp
+namespace Streaming.WpfApp.ViewModels
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
@@ -28,9 +24,7 @@ namespace Streaming.WpfApp
             //var bytes = new byte[stream.Length];
             //stream.Read(bytes, 0, (int)stream.Length);
 
-            Cameras = new ObservableCollection<CameraData>();
-         
-        
+            Cameras = new ObservableCollection<CameraData>();  
         }
     }
 }

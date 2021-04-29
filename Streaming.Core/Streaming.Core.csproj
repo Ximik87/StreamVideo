@@ -41,11 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ICameraData.cs" />
-    <Compile Include="ISeparateCameraProcess.cs" />
+    <Compile Include="CameraInfo.cs" />
+    <Compile Include="Interfaces\ICameraData.cs" />
+    <Compile Include="Interfaces\ISeparateCameraProcess.cs" />
     <Compile Include="NewFrameEventArgs.cs" />
-    <Compile Include="ILinkContainer.cs" />
-    <Compile Include="IVideoConsumer.cs" />
+    <Compile Include="Interfaces\ILinkContainer.cs" />
+    <Compile Include="Interfaces\IVideoConsumer.cs" />
     <Compile Include="LinkContainerStub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeparateCameraProcess.cs" />

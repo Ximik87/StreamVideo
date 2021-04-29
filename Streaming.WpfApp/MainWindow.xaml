@@ -4,10 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local1="clr-namespace:Streaming.WpfApp"
+        xmlns:local2="clr-namespace:Streaming.WpfApp.ViewModels"
         mc:Ignorable="d"
         Title="Camera streaming" Height="450" Width="800">
     <Window.DataContext>
-        <local1:MainWindowViewModel/>
+        <local2:MainWindowViewModel/>
     </Window.DataContext>
     <Window.Resources>
         <local1:BitmapConverter x:Key="imgConverter" />

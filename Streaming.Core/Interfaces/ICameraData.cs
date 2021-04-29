@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Streaming.Core
+namespace Streaming.Core.Interfaces
 {
     public interface ICameraData
     {

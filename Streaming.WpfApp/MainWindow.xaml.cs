@@ -1,4 +1,5 @@
 ﻿using Streaming.Core;
+using Streaming.WpfApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace Streaming.WpfApp
             InitializeComponent();
             var vm = new MainWindowViewModel();
             var linkStub = new LinkContainerStub();
+            linkStub.Parse();
             DataContext = vm;
             _background = new BackgroundProcess(vm.Cameras, linkStub);
 

@@ -1,5 +1,5 @@
 ﻿using System;
-using Streaming.Core;
+using Streaming.Core.Interfaces;
 
 namespace Streaming.Core
 {
