@@ -7,14 +7,21 @@
         mc:Ignorable="d"
         Title="Camera streaming" Height="477.188" Width="1067.188">
     <Window.DataContext>
-        <local:MainWindowViewModel />
+        <local:MainWindowViewModel/>
     </Window.DataContext>
+    <Window.Resources>
+        <local:BitmapConverter x:Key="imgConverter" />
+    </Window.Resources>
     <Grid>
         <ItemsControl ItemsSource="{Binding Cameras}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <Image Source="{Binding Image}" Width="250" Height="200" Stretch="Fill" />
+                        <Image 
+                            Source="{Binding Image, Converter={StaticResource imgConverter}}" 
+                            Width="250" 
+                            Height="200" 
+                            Stretch="Fill" />
                         <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" />
                     </StackPanel>
                 </DataTemplate>
@@ -24,7 +31,6 @@
                     <UniformGrid Columns="2" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
-        </ItemsControl>
-
+        </ItemsControl>      
     </Grid>
 </Window>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -16,37 +17,20 @@ namespace Streaming.WpfApp
 
         public ObservableCollection<CameraData> Cameras { get; set; }
 
-        protected void OnPropertyChanged([CallerMemberName]string propertyName = "")
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public MainWindowViewModel()
         {
-            var stream = File.OpenRead(@"d:\qqqq2.jpg");
-            var bytes = new byte[stream.Length];
-            stream.Read(bytes, 0, (int)stream.Length);
+            //var stream = File.OpenRead(@"d:\qqqq2.jpg");
+            //var bytes = new byte[stream.Length];
+            //stream.Read(bytes, 0, (int)stream.Length);
 
-            Cameras = new ObservableCollection<CameraData>
-            {
-                new CameraData { Name = "firstCamera", Image = bytes },
-                new CameraData { Name = "secondCamera", Image = bytes },
-                new CameraData { Name = "thirdCamera", Image = bytes },
-                new CameraData { Name = "4Camera", Image = bytes },
-            };
-        }
-    }
-
-    public class CameraData : INotifyPropertyChanged
-    {
-        public string Name { get; set; }
-        public byte[] Image { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            Cameras = new ObservableCollection<CameraData>();
+         
+        
         }
     }
 }

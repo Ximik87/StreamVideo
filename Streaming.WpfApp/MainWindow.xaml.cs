@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,11 +21,25 @@ namespace Streaming.WpfApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        private BackgroundProcess _background;
         public MainWindow()
         {
-            InitializeComponent();          
-
+            InitializeComponent();
+            var vm =  new MainWindowViewModel();
+            DataContext = vm;
+            _background = new BackgroundProcess(vm.Cameras);           
+           
         }
-     
+
+        //private void testImg()
+        //{
+        //    var stream = File.OpenRead(@"d:\empty.jpg");  //File.OpenRead(@"d:\qqqq2.jpg");
+        //    var bitMap = new BitmapImage();
+        //    bitMap.BeginInit();
+        //    bitMap.StreamSource = stream;
+        //    bitMap.EndInit();
+        //    imgTest.Source = bitMap;          
+        //}
+
     }
 }
