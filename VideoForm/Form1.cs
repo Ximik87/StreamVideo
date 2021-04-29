@@ -18,7 +18,7 @@ namespace VideoForm
         private const string cameraUrl = "http://3.16.40.200/mjpg/video.mjpg";
         private TestTick _loader = new TestTick();
         private aaa _loader2 = new aaa();
-        private Streaming.Core.VideoConsumerStub _stub = new Streaming.Core.VideoConsumerStub();
+        private Streaming.Core.VideoConsumerStub _stub = new Streaming.Core.VideoConsumerStub(string.Empty);
 
         public Form1()
         {

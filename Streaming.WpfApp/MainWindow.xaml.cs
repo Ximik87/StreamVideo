@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Streaming.Core;
 
 namespace Streaming.WpfApp
 {
@@ -21,13 +22,15 @@ namespace Streaming.WpfApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private BackgroundProcess _background;
+        private readonly BackgroundProcess _background;
         public MainWindow()
         {
+            // todo DI implement
             InitializeComponent();
             var vm =  new MainWindowViewModel();
+            var linkStub = new LinkContainerStub();
             DataContext = vm;
-            _background = new BackgroundProcess(vm.Cameras);           
+            _background = new BackgroundProcess(vm.Cameras, linkStub);           
            
         }
 

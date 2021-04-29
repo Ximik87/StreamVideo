@@ -14,16 +14,18 @@ namespace Streaming.Core
         private Stream _jpegFrame2;
         public event NewFrameEventHandler NewFrame;
         private int _count = 0;
+        private int _delay = 1;
 
-        public VideoConsumerStub()
+        public VideoConsumerStub(string url)
         {
+            _delay = new Random(GetHashCode()).Next(20, 1000);
             Init();
         }
 
         private void Init()
         {
-            _jpegFrame = File.OpenRead(@"D:\qqqq.jpg");
-            _jpegFrame2 = File.OpenRead(@"D:\qqqq2.jpg");
+            _jpegFrame = StreamHelper.GetStream(@"D:\qqqq.jpg");
+            _jpegFrame2 = StreamHelper.GetStream(@"D:\qqqq2.jpg");
         }
 
         public void Start()
@@ -52,7 +54,7 @@ namespace Streaming.Core
                     NewFrame?.Invoke(this, new NewFrameEventArgs(_jpegFrame2));
                 }
 
-                await Task.Delay(TimeSpan.FromSeconds(1));
+                await Task.Delay(TimeSpan.FromMilliseconds(_delay));
             }
         }
     }

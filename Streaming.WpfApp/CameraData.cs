@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace Streaming.WpfApp
 {
-    public class CameraData : INotifyPropertyChanged
+    public class CameraData : INotifyPropertyChanged, ICameraData
     {
         private Stream _image;
         private string _name;
@@ -39,10 +39,9 @@ namespace Streaming.WpfApp
                 _image = value;
                 OnPropertyChanged(nameof(Image));
             }
-
         }
 
-
+        public string Url { get; set; }
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
