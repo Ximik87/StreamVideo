@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Streaming.Core;
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Streaming.Core;
 
 namespace Streaming.WpfApp
 {
@@ -27,11 +26,11 @@ namespace Streaming.WpfApp
         {
             // todo DI implement
             InitializeComponent();
-            var vm =  new MainWindowViewModel();
+            var vm = new MainWindowViewModel();
             var linkStub = new LinkContainerStub();
             DataContext = vm;
-            _background = new BackgroundProcess(vm.Cameras, linkStub);           
-           
+            _background = new BackgroundProcess(vm.Cameras, linkStub);
+
         }
 
         //private void testImg()
@@ -43,6 +42,5 @@ namespace Streaming.WpfApp
         //    bitMap.EndInit();
         //    imgTest.Source = bitMap;          
         //}
-
     }
 }
