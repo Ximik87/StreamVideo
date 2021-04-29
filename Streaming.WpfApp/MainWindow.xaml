@@ -1,0 +1,30 @@
+﻿<Window x:Class="Streaming.WpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Streaming.WpfApp"
+        mc:Ignorable="d"
+        Title="Camera streaming" Height="477.188" Width="1067.188">
+    <Window.DataContext>
+        <local:MainWindowViewModel />
+    </Window.DataContext>
+    <Grid>
+        <ItemsControl ItemsSource="{Binding Cameras}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <Image Source="{Binding Image}" Width="250" Height="200" Stretch="Fill" />
+                        <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" />
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="2" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+
+    </Grid>
+</Window>
