@@ -1,9 +1,9 @@
 ﻿using System;
 using Streaming.Core;
 
-namespace Streaming.WpfApp
+namespace Streaming.Core
 {
-    class SeparateCameraProcess : ISeparateCameraProcess
+    public class SeparateCameraProcess : ISeparateCameraProcess
     {
         private IVideoConsumer _consumer;
         private readonly ICameraData _camera;

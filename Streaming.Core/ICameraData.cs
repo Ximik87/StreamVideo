@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Streaming.WpfApp
+namespace Streaming.Core
 {
     public interface ICameraData
     {

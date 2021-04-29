@@ -12,8 +12,10 @@ namespace TestGetData
 {
     class Program
     {
-          private const string cameraUrl = "http://3.16.40.200/mjpg/video.mjpg";
-        //private const string cameraUrl = "http://89.245.165.210:8888/mjpg/video.mjpg";
+        // http://www.insecam.org/en/bytype/Axis/
+        //   private const string cameraUrl = "http://3.16.40.200/mjpg/video.mjpg";
+        // private const string cameraUrl = "http://89.245.165.210:8888/mjpg/video.mjpg";
+        private const string cameraUrl = "http://77.22.100.19:88/mjpg/video.mjpg";
 
         static void Main(string[] args)
         {
@@ -73,21 +75,21 @@ namespace TestGetData
                     int total = 0;
                     var imageToBytes = new byte[imageLength];
 
-                    while (total < imageLength)
-                    {
-                        if (imageLength - total > readSize)
-                        {
-                            stream.Read(imageToBytes, total, readSize);
-                        }
-                        else
-                        {
-                            stream.Read(imageToBytes, total, imageLength - total);
-                        }
-                        total += readSize;
-                    }
+                    //while (total < imageLength)
+                    //{
+                    //    if (imageLength - total > readSize)
+                    //    {
+                    //        stream.Read(imageToBytes, total, readSize);
+                    //    }
+                    //    else
+                    //    {
+                    //        stream.Read(imageToBytes, total, imageLength - total);
+                    //    }
+                    //    total += readSize;
+                    //}
 
                     // alg #2
-                    //stream.Read(imageToBytes, 0, imageLength);
+                    stream.Read(imageToBytes, 0, imageLength);
 
 
                     // показать хедер и конец
@@ -101,7 +103,7 @@ namespace TestGetData
                     //    imageToBytes[imageLength - 2].ToString("X"),
                     //    imageToBytes[imageLength - 1].ToString("X"));
 
-                    using (FileStream fs = File.Create(@"c:\1.bin"))
+                    using (FileStream fs = File.Create(@"c:\example.jpg"))
                     {
                         fs.Write(imageToBytes, 0, imageLength);
                     }
@@ -126,7 +128,7 @@ namespace TestGetData
                         Console.WriteLine("complete jpeg");
                     }
 
-                    Thread.Sleep(800);
+                    Thread.Sleep(400);
                 }
             }
         }
@@ -205,9 +207,7 @@ namespace TestGetData
                     //If you sleep several tens of milliseconds properly here, it will reduce the situation of incomplete picture reading. The reason of incomplete picture random reading has not been found yet
                     Thread.Sleep(20);
                 }
-            }
-            stream.Close();
-            hwResponse.Close();
+            }           
         }
 
         private static void accessImageHandler(byte[] imageFileBytes)

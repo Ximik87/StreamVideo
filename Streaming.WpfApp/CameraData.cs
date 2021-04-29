@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using Streaming.Core;
 
 namespace Streaming.WpfApp
 {

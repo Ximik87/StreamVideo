@@ -47,7 +47,7 @@ namespace VideoForm
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
 
         }
@@ -147,9 +147,7 @@ namespace VideoForm
                     Thread.Sleep(20);
                     Application.DoEvents();
                 }
-            }
-            stream.Close();
-            hwResponse.Close();
+            }                       
         }
 
         private void accessImageHandler(byte[] imageFileBytes)
