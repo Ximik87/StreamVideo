@@ -73,19 +73,21 @@ namespace TestGetData
                     int total = 0;
                     var imageToBytes = new byte[imageLength];
 
-                    //while (total < imageLength)
-                    //{
-                    //    if (imageLength - total > readSize)
-                    //    {
-                    //        stream.Read(imageToBytes, total, readSize);
-                    //    }
-                    //    else
-                    //    {
-                    //        stream.Read(imageToBytes, total, imageLength - total);
-                    //    }
-                    //    total += readSize;
-                    //}
-                    stream.Read(imageToBytes, 0, imageLength);
+                    while (total < imageLength)
+                    {
+                        if (imageLength - total > readSize)
+                        {
+                            stream.Read(imageToBytes, total, readSize);
+                        }
+                        else
+                        {
+                            stream.Read(imageToBytes, total, imageLength - total);
+                        }
+                        total += readSize;
+                    }
+
+                    // alg #2
+                    //stream.Read(imageToBytes, 0, imageLength);
 
 
                     // показать хедер и конец
@@ -124,7 +126,7 @@ namespace TestGetData
                         Console.WriteLine("complete jpeg");
                     }
 
-                    Thread.Sleep(600);
+                    Thread.Sleep(800);
                 }
             }
         }
