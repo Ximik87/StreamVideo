@@ -45,7 +45,15 @@ namespace Streaming.WpfApp
         {
             foreach (var camera in _cameras)
             {
-                var stub = new VideoConsumerStub(camera.Url);
+                IVideoConsumer stub;
+                if (camera.Name != "firstCamera")
+                {
+                    stub = new VideoConsumerStub(camera.Url);
+                }
+                else
+                {
+                    stub = new VideoConsumer();
+                }
                 var consumer = new SeparateCameraProcess(stub, camera);
                 consumer.Start();
                 _consumers.Add(consumer);

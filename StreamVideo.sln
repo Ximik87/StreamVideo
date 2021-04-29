@@ -9,7 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoForm", "VideoForm\Vide
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Streaming.Core", "Streaming.Core\Streaming.Core.csproj", "{A35CD142-96CA-43C2-AF08-B14D8CB30BBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Streaming.WpfApp", "Streaming.WpfApp\Streaming.WpfApp.csproj", "{EDA72004-1FD7-4D97-82F1-9EE40F306DAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Streaming.WpfApp", "Streaming.WpfApp\Streaming.WpfApp.csproj", "{EDA72004-1FD7-4D97-82F1-9EE40F306DAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Streaming.UnitTests", "Streaming.UnitTests\Streaming.UnitTests.csproj", "{A206D6A6-5C38-4942-B553-FA050BE40F6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{EDA72004-1FD7-4D97-82F1-9EE40F306DAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDA72004-1FD7-4D97-82F1-9EE40F306DAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDA72004-1FD7-4D97-82F1-9EE40F306DAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A206D6A6-5C38-4942-B553-FA050BE40F6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A206D6A6-5C38-4942-B553-FA050BE40F6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A206D6A6-5C38-4942-B553-FA050BE40F6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A206D6A6-5C38-4942-B553-FA050BE40F6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

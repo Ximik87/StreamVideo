@@ -27,6 +27,7 @@ namespace TestGetData
         private static void NewTest()
         {
             var log = new Logger();
+            var compensator = new DelayCompensator();
             //Create an HTTP request, as long as the request does not end, MJPEG server will always send real-time image content to the response body of the request
             var hwRequest = (HttpWebRequest)WebRequest.Create(cameraUrl);
             hwRequest.Method = "GET";
@@ -121,14 +122,15 @@ namespace TestGetData
                             }
                             l = c;
                         }
-                        Console.WriteLine("--incomplete jpeg");
+                        Console.WriteLine("--incomplete jpeg, delay: {0}", compensator.Delay);
+                        compensator.SetFail();
                     }
                     else
                     {
                         Console.WriteLine("complete jpeg");
                     }
 
-                    Thread.Sleep(400);
+                    Thread.Sleep(compensator.Delay);
                 }
             }
         }
@@ -207,12 +209,32 @@ namespace TestGetData
                     //If you sleep several tens of milliseconds properly here, it will reduce the situation of incomplete picture reading. The reason of incomplete picture random reading has not been found yet
                     Thread.Sleep(20);
                 }
-            }           
+            }
         }
 
         private static void accessImageHandler(byte[] imageFileBytes)
         {
             Console.WriteLine("Size: {0}", imageFileBytes.Length);
+        }
+    }
+
+    public class DelayCompensator
+    {
+        int currentDelay = 100;
+        public int Delay => currentDelay;
+        private bool isSecond = false;
+        public void SetFail()
+        {
+            if (isSecond)
+            {
+                currentDelay += 50;
+                isSecond = false;
+            }
+            else
+            {
+                isSecond = true;
+            }
+
         }
     }
 }
