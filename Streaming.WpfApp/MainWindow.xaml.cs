@@ -29,7 +29,7 @@ namespace Streaming.WpfApp
             InitializeComponent();
             var vm = new MainWindowViewModel();
             var linkStub = new LinkContainerStub();
-            linkStub.Parse();
+            linkStub.GetContext();
             DataContext = vm;
             _background = new BackgroundProcess(vm.Cameras, linkStub);
 

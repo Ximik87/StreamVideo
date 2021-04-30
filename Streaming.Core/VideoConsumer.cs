@@ -17,7 +17,7 @@ namespace Streaming.Core
 
         public VideoConsumer()
         {
-            _url = "http://77.22.100.19:88/mjpg/video.mjpg";
+            _url = "http://217.150.238.14/mjpg/video.mjpg";
         }
 
         public void Start()

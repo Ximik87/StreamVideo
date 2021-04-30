@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Streaming.Core.Interfaces
+namespace Streaming.Core
 {
-    public interface ILinkContainer
+    public interface ILinkParser
     {
         IEnumerable<CameraInfo> CameraInfos { get; }
-        void GetContext();
+        void Parse();
     }
 }

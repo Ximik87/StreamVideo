@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Streaming.UnitTests
 {
-    public class UnitTest1
+    public class DelayCompensatorTests
     {
         [Fact]
         public void DelayCompensatorTest()
@@ -16,7 +16,7 @@ namespace Streaming.UnitTests
             compensator.SetFail();
 
             // ASSERT
-            Assert.Equal(40, compensator.Delay);
+            Assert.Equal(100, compensator.Delay);
         }
 
         [Fact]
@@ -32,7 +32,7 @@ namespace Streaming.UnitTests
             compensator.SetFail();
 
             // ASSERT
-            Assert.Equal(320, compensator.Delay);
+            Assert.Equal(200, compensator.Delay);
         }
     }
 
