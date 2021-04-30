@@ -13,7 +13,7 @@ namespace Streaming.Core
     public class LinkContainer : ILinkContainer
     {
 
-        public IEnumerable<CameraInfo> CameraInfos => throw new NotImplementedException();
+        public IEnumerable<CameraInfo> CameraInfos => linkParser.CameraInfos;
         private ILinkParser linkParser;
 
         public LinkContainer(ILinkParser parser)
@@ -21,7 +21,7 @@ namespace Streaming.Core
             linkParser = parser;
         }
 
-        public void GetContext()
+        public void GetContent()
         {
             linkParser.Parse();
         }

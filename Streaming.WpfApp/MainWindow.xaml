@@ -6,12 +6,12 @@
         xmlns:local1="clr-namespace:Streaming.WpfApp"
         xmlns:local2="clr-namespace:Streaming.WpfApp.ViewModels"
         mc:Ignorable="d"
-        Title="Camera streaming" Height="450" Width="800">
+        Title="Camera streaming" Height="550" Width="900">
     <Window.DataContext>
         <local2:MainWindowViewModel/>
     </Window.DataContext>
     <Window.Resources>
-        <local1:BitmapConverter x:Key="imgConverter" />
+        <local1:BitmapConverter x:Key="BitmapConverter" />
     </Window.Resources>
     <Grid>
         <ItemsControl ItemsSource="{Binding Cameras}">
@@ -19,7 +19,7 @@
                 <DataTemplate>
                     <StackPanel>
                         <Image 
-                            Source="{Binding Image, Converter={StaticResource imgConverter}}" 
+                            Source="{Binding Image, Converter={StaticResource BitmapConverter}}" 
                             Width="250" 
                             Height="200" 
                             Stretch="Fill" />
@@ -29,7 +29,7 @@
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="2" />
+                    <UniformGrid Columns="3" Rows="2" />                   
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>

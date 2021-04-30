@@ -28,8 +28,9 @@ namespace Streaming.WpfApp
             // todo DI implement
             InitializeComponent();
             var vm = new MainWindowViewModel();
-            var linkStub = new LinkContainerStub();
-            linkStub.GetContext();
+            var parser = new CameraInfoParser();
+            var linkStub = new LinkContainer(parser);
+            linkStub.GetContent();
             DataContext = vm;
             _background = new BackgroundProcess(vm.Cameras, linkStub);
 

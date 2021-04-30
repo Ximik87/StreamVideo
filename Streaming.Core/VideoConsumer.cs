@@ -15,9 +15,9 @@ namespace Streaming.Core
         string _url;
         public event NewFrameEventHandler NewFrame;
 
-        public VideoConsumer()
+        public VideoConsumer(string url)
         {
-            _url = "http://217.150.238.14/mjpg/video.mjpg";
+            _url = url; //"http://217.150.238.14/mjpg/video.mjpg";
         }
 
         public void Start()

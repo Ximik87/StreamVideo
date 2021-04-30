@@ -6,6 +6,6 @@ namespace Streaming.Core.Interfaces
     public interface ILinkContainer
     {
         IEnumerable<CameraInfo> CameraInfos { get; }
-        void GetContext();
+        void GetContent();
     }
 }

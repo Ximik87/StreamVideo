@@ -5,13 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Streaming.Core.Interfaces;
+using Streaming.Core.Properties;
 
 namespace Streaming.Core
 {
     public class VideoConsumerStub : IVideoConsumer
     {
         private bool _isWorking = false;
-        private Stream _jpegFrame;
+        private Stream _jpegFrame1;
         private Stream _jpegFrame2;
         public event NewFrameEventHandler NewFrame;
         private int _count = 0;
@@ -25,8 +26,8 @@ namespace Streaming.Core
 
         private void Init()
         {
-            _jpegFrame = StreamHelper.GetStream(@"D:\qqqq.jpg");
-            _jpegFrame2 = StreamHelper.GetStream(@"D:\qqqq2.jpg");
+            _jpegFrame1 = new MemoryStream(Resources.frame1); // StreamHelper.GetStream(@"D:\qqqq.jpg"); 
+            _jpegFrame2 = new MemoryStream(Resources.frame2);
         }
 
         public void Start()
@@ -48,7 +49,7 @@ namespace Streaming.Core
 
                 if (_count % 2 == 0)
                 {
-                    NewFrame?.Invoke(this, new NewFrameEventArgs(_jpegFrame));
+                    NewFrame?.Invoke(this, new NewFrameEventArgs(_jpegFrame1));
                 }
                 else
                 {

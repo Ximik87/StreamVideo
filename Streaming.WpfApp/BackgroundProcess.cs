@@ -6,6 +6,7 @@ using System.Linq;
 using Streaming.Core;
 using Streaming.Core.Interfaces;
 using Streaming.WpfApp.Models;
+using Streaming.WpfApp.Properties;
 
 namespace Streaming.WpfApp
 {
@@ -27,8 +28,8 @@ namespace Streaming.WpfApp
 
         private void Init()
         {
-            // todo implement beautiful
-            _emptyFrame = StreamHelper.GetStream(@"d:\empty.jpg");
+            _emptyFrame = new MemoryStream(Resources.empty);
+
 
             foreach (var item in _linkContainer.CameraInfos)
             {
@@ -46,14 +47,10 @@ namespace Streaming.WpfApp
             foreach (var camera in _cameras)
             {
                 IVideoConsumer stub;
-                if (camera.Name != "firstCamera")
-                {
-                    stub = new VideoConsumerStub(camera.Url);
-                }
-                else
-                {
-                    stub = new VideoConsumer();
-                }
+
+
+                stub = new VideoConsumer(camera.Url);
+
                 var consumer = new SeparateCameraProcess(stub, camera);
                 consumer.Start();
                 _consumers.Add(consumer);

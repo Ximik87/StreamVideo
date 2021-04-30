@@ -9,7 +9,7 @@ namespace Streaming.Core
         private List<CameraInfo> _links = new List<CameraInfo>();
         public IEnumerable<CameraInfo> CameraInfos => _links;
 
-        public void GetContext()
+        public void GetContent()
         {
             _links.Add(new CameraInfo
             {
