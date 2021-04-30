@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Xml.Linq;
+using Streaming.Core.Interfaces;
 
 namespace Streaming.Core
 {

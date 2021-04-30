@@ -5,31 +5,31 @@ using System.IO;
 using System.Linq;
 using Streaming.Core;
 using Streaming.Core.Interfaces;
+using Streaming.WpfApp.Interfaces;
 using Streaming.WpfApp.Models;
 using Streaming.WpfApp.Properties;
+using Streaming.WpfApp.ViewModels;
 
 namespace Streaming.WpfApp
 {
-    class BackgroundProcess
+    class BackgroundProcess : IBackgroundProcess
     {
         private Stream _emptyFrame;
         private readonly ObservableCollection<CameraData> _cameras;
         private readonly List<ISeparateCameraProcess> _consumers;
         private readonly ILinkContainer _linkContainer;
 
-        public BackgroundProcess(ObservableCollection<CameraData> cameras, ILinkContainer linkContainer)
+        public BackgroundProcess(IMainWindowViewModel viewModel, ILinkContainer linkContainer)
         {
-            _cameras = cameras;
+            _cameras = viewModel.Cameras;
             _linkContainer = linkContainer;
             _consumers = new List<ISeparateCameraProcess>();
-            Init();
-            Test();
+            Init();           
         }
 
         private void Init()
         {
             _emptyFrame = new MemoryStream(Resources.empty);
-
 
             foreach (var item in _linkContainer.CameraInfos)
             {
@@ -42,18 +42,25 @@ namespace Streaming.WpfApp
             }
         }
 
-        private void Test()
+        public void Start()
         {
+            int i = 0;
             foreach (var camera in _cameras)
             {
                 IVideoConsumer stub;
-
-
-                stub = new VideoConsumer(camera.Url);
+                if (i < 5)
+                {
+                    stub = new VideoConsumer(camera.Url);
+                }
+                else
+                {
+                    stub = new VideoConsumerStub(camera.Url);
+                }
 
                 var consumer = new SeparateCameraProcess(stub, camera);
                 consumer.Start();
                 _consumers.Add(consumer);
+                i++;
             }
         }
     }

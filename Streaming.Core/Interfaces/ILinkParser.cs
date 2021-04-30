@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Streaming.Core
+namespace Streaming.Core.Interfaces
 {
     public interface ILinkParser
     {

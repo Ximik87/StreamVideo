@@ -7,7 +7,7 @@ using Streaming.WpfApp.Models;
 
 namespace Streaming.WpfApp.ViewModels
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel : INotifyPropertyChanged, IMainWindowViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -24,7 +24,7 @@ namespace Streaming.WpfApp.ViewModels
             //var bytes = new byte[stream.Length];
             //stream.Read(bytes, 0, (int)stream.Length);
 
-            Cameras = new ObservableCollection<CameraData>();  
+            Cameras = new ObservableCollection<CameraData>();
         }
     }
 }
