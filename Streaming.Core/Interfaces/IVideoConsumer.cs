@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Streaming.Core.Interfaces
+﻿namespace Streaming.Core.Interfaces
 {
     public interface IVideoConsumer
     {

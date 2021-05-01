@@ -1,29 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 using Streaming.Core.Interfaces;
 
 namespace Streaming.Core
 {
     public class LinkContainer : ILinkContainer
     {
-
-        public IEnumerable<CameraInfo> CameraInfos => linkParser.CameraInfos;
-        private ILinkParser linkParser;
+        private List<CameraInfo> _cameras;
+        private readonly ILinkParser linkParser;
+        public IEnumerable<CameraInfo> CameraInfos => _cameras;
 
         public LinkContainer(ILinkParser parser)
         {
             linkParser = parser;
+            _cameras = new List<CameraInfo>();
         }
 
         public void GetContent()
         {
-            linkParser.Parse();
+            _cameras = linkParser.Parse().ToList();
         }
     }
 }

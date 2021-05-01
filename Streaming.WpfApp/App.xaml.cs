@@ -32,9 +32,10 @@ namespace Streaming.WpfApp
         {
             services.AddSingleton<Views.MainWindow>();
             services.AddSingleton<IMainWindowViewModel,MainWindowViewModel>();
+            services.AddSingleton<IHtmlContentLoader, HtmlContentLoader>();
             services.AddSingleton<ILinkParser, CameraInfoParser>();
             services.AddSingleton<ILinkContainer, LinkContainer>();
-            //services.AddSingleton<IBackgroundProcess, BackgroundProcess>();
+            services.AddSingleton<IBackgroundProcess, BackgroundProcess>();
         }
 
         private void App_OnStartup(object sender, StartupEventArgs e)

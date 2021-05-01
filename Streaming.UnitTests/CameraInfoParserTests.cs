@@ -14,13 +14,14 @@ namespace Streaming.UnitTests
         public void ParseTest()
         {
             // ARRANGE
-            var parser = new CameraInfoParser();
+            var loader = new HtmlContentLoader(); // todo mock it
+            var parser = new CameraInfoParser(loader);
 
             // ACT
-            parser.Parse();
+            var result = parser.Parse();
 
             // ASSERT
-            Assert.Equal(6, parser.CameraInfos.Count());
+            Assert.Equal(6, result.Count());
         }
 
         [Fact]

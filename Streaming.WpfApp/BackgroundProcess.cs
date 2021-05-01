@@ -23,12 +23,12 @@ namespace Streaming.WpfApp
         {
             _cameras = viewModel.Cameras;
             _linkContainer = linkContainer;
-            _consumers = new List<ISeparateCameraProcess>();
-            Init();           
+            _consumers = new List<ISeparateCameraProcess>();             
         }
 
         private void Init()
         {
+            _linkContainer.GetContent();
             _emptyFrame = new MemoryStream(Resources.empty);
 
             foreach (var item in _linkContainer.CameraInfos)
@@ -44,6 +44,8 @@ namespace Streaming.WpfApp
 
         public void Start()
         {
+            Init();
+
             int i = 0;
             foreach (var camera in _cameras)
             {

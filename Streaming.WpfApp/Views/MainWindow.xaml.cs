@@ -1,5 +1,6 @@
 ﻿using Streaming.Core;
 using Streaming.Core.Interfaces;
+using Streaming.WpfApp.Interfaces;
 using Streaming.WpfApp.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -23,16 +24,12 @@ namespace Streaming.WpfApp.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly BackgroundProcess _background;
-        public MainWindow(ILinkContainer container, IMainWindowViewModel viewModel)
+        public MainWindow(IMainWindowViewModel viewModel, IBackgroundProcess background)
         {
             InitializeComponent();
             DataContext = viewModel;
-            container.GetContent();
-
-            // todo надо подумать, фоновому процессу надо знать про камеры
-            _background = new BackgroundProcess(viewModel, container);
-            _background.Start();
+        
+            background.Start();
         }
     }
 }

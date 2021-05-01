@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Streaming.Core.Interfaces;
 using Streaming.Core.Properties;
@@ -26,7 +23,7 @@ namespace Streaming.Core
 
         private void Init()
         {
-            _jpegFrame1 = new MemoryStream(Resources.frame1); // StreamHelper.GetStream(@"D:\qqqq.jpg"); 
+            _jpegFrame1 = new MemoryStream(Resources.frame1);
             _jpegFrame2 = new MemoryStream(Resources.frame2);
         }
 
