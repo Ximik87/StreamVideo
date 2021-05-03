@@ -10,12 +10,12 @@ namespace Streaming.Core
     public class VideoConsumer : IVideoConsumer
     {
         private bool _isWorking = false;
-        string _url;
+        private readonly string _url;
         public event NewFrameEventHandler NewFrame;
 
         public VideoConsumer(string url)
         {
-            _url = url; //"http://217.150.238.14/mjpg/video.mjpg";
+            _url = url;
         }
 
         public void Start()
@@ -31,6 +31,7 @@ namespace Streaming.Core
 
         private async Task DoWork()
         {
+            // todo cancelation toekn ?
             var compensator = new DelayCompensator();
             //Create an HTTP request, as long as the request does not end, MJPEG server will always send real-time image content to the response body of the request
             var hwRequest = (HttpWebRequest)WebRequest.Create(_url);

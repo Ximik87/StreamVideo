@@ -9,21 +9,21 @@ namespace Streaming.WpfApp.Models
     public class CameraData : INotifyPropertyChanged, ICameraData
     {
         private Stream _image;
-        private string _name;
+        private string _title;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string Name
+        public string Title
         {
-            get => _name;
+            get => _title;
             set
             {
-                if (_name == value)
+                if (_title == value)
                 {
                     return;
                 }
 
-                _name = value;
-                OnPropertyChanged(nameof(Name));
+                _title = value;
+                OnPropertyChanged(nameof(Title));
             }
         }
 

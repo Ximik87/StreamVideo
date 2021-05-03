@@ -31,7 +31,7 @@ namespace Streaming.Core
                 var url = tag.Attribute("src").Value;
                 cameras.Add(new CameraInfo
                 {
-                    Name = name,
+                    Title = name,
                     Url = url
                 });
             }

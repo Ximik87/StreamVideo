@@ -12,22 +12,22 @@ namespace Streaming.Core
         {
             _links.Add(new CameraInfo
             {
-                Name = "firstCamera",
+                Title = "firstCamera",
                 Url = ""
             });
             _links.Add(new CameraInfo
             {
-                Name = "secondCamera",
+                Title = "secondCamera",
                 Url = ""
             });
             _links.Add(new CameraInfo
             {
-                Name = "thirdCamera",
+                Title = "thirdCamera",
                 Url = ""
             });
             _links.Add(new CameraInfo
             {
-                Name = "4Camera"
+                Title = "4Camera"
             });
         }
     }

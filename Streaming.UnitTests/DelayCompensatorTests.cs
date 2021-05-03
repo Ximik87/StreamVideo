@@ -1,5 +1,4 @@
 using Streaming.Core;
-using System;
 using Xunit;
 
 namespace Streaming.UnitTests

@@ -15,7 +15,8 @@ namespace TestGetData
         // http://www.insecam.org/en/bytype/Axis/
         //   private const string cameraUrl = "http://3.16.40.200/mjpg/video.mjpg";
         // private const string cameraUrl = "http://89.245.165.210:8888/mjpg/video.mjpg";
-        private const string cameraUrl = "http://77.22.100.19:88/mjpg/video.mjpg";
+         private const string cameraUrl = "http://77.22.100.19:88/mjpg/video.mjpg";
+    //    private const string cameraUrl = "http://109.229.70.17:8080/?action=stream";
 
         static void Main(string[] args)
         {

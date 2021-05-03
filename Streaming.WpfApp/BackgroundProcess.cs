@@ -35,7 +35,7 @@ namespace Streaming.WpfApp
             {
                 _cameras.Add(new CameraData
                 {
-                    Name = item.Name,
+                    Title = item.Title,
                     Url = item.Url,
                     Image = _emptyFrame
                 });

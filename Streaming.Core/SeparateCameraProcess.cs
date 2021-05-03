@@ -4,7 +4,7 @@ namespace Streaming.Core
 {
     public class SeparateCameraProcess : ISeparateCameraProcess
     {
-        private IVideoConsumer _consumer;
+        private readonly IVideoConsumer _consumer;
         private readonly ICameraData _camera;
 
         public SeparateCameraProcess(IVideoConsumer consumer, ICameraData camera)

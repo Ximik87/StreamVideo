@@ -6,7 +6,7 @@
         xmlns:local1="clr-namespace:Streaming.WpfApp"
         xmlns:local2="clr-namespace:Streaming.WpfApp.ViewModels"
         mc:Ignorable="d"
-        Title="Camera streaming" Height="550" Width="900">
+        Title="Camera streaming" Width="1200" Height="600">
     <Window.DataContext>
         <local2:MainWindowViewModel/>
     </Window.DataContext>
@@ -20,10 +20,10 @@
                     <StackPanel>
                         <Image 
                             Source="{Binding Image, Converter={StaticResource BitmapConverter}}" 
-                            Width="250" 
-                            Height="200" 
+                            Width="350" 
+                            Height="250" 
                             Stretch="Fill" />
-                        <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" />
+                        <TextBlock Text="{Binding Title}" HorizontalAlignment="Center" />
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
