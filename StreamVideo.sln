@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Streaming.UnitTests", "Stre
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Streaming.FuncTests", "Streaming.FuncTests\Streaming.FuncTests.csproj", "{0B74E80B-9BA1-462D-B1D4-D3BFA1948C77}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Streaming.Core.Interfaces", "Streaming.Core.Interfaces\Streaming.Core.Interfaces.csproj", "{1D08E994-C94D-4227-8F39-CBEE33AA9610}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{0B74E80B-9BA1-462D-B1D4-D3BFA1948C77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B74E80B-9BA1-462D-B1D4-D3BFA1948C77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B74E80B-9BA1-462D-B1D4-D3BFA1948C77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D08E994-C94D-4227-8F39-CBEE33AA9610}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D08E994-C94D-4227-8F39-CBEE33AA9610}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D08E994-C94D-4227-8F39-CBEE33AA9610}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D08E994-C94D-4227-8F39-CBEE33AA9610}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

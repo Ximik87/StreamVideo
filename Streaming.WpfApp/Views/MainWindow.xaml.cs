@@ -1,19 +1,9 @@
-﻿using Streaming.WpfApp.Interfaces;
-using Streaming.WpfApp.ViewModels;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Streaming.WpfApp.Interfaces;
+using Streaming.WpfApp.ViewModels;
 
 namespace Streaming.WpfApp.Views
 {
@@ -22,12 +12,18 @@ namespace Streaming.WpfApp.Views
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly IBackgroundProcess _background;
         public MainWindow(IMainWindowViewModel viewModel, IBackgroundProcess background)
         {
             InitializeComponent();
             DataContext = viewModel;
-        
-            background.Start();
+            _background = background;
+            _background.Start();
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            _background.Stop();
         }
     }
 }

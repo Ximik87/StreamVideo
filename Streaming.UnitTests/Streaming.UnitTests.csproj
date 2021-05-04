@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Streaming.Core.Interfaces\Streaming.Core.Interfaces.csproj" />
     <ProjectReference Include="..\Streaming.Core\Streaming.Core.csproj" />
   </ItemGroup>
 

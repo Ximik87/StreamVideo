@@ -15,7 +15,7 @@ namespace Streaming.Core
         public ISeparateCameraProcess Create(ICameraData camera)
         {
             var logger = _logger.CreateLogger<VideoConsumer>();
-            var videoConsumer = new VideoConsumer(camera, logger);
+            var videoConsumer = new VideoConsumer(logger, camera);
             var separateProcess = new SeparateCameraProcess(videoConsumer, camera);
             return separateProcess;
         }

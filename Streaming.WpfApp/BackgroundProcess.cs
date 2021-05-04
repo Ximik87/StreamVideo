@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using Microsoft.Extensions.Logging;
 using Streaming.Core.Interfaces;
 using Streaming.WpfApp.Interfaces;
 using Streaming.WpfApp.Models;
@@ -57,7 +55,15 @@ namespace Streaming.WpfApp
             {
                 var separateProcess = _factory.Create(camera);
                 separateProcess.Start();
-                _consumers.Add(separateProcess);                
+                _consumers.Add(separateProcess);
+            }
+        }
+
+        public void Stop()
+        {
+            foreach (var consumer in _consumers)
+            {
+                consumer.Stop();
             }
         }
     }

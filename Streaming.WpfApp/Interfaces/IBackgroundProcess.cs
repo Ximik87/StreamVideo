@@ -5,5 +5,6 @@ namespace Streaming.WpfApp.Interfaces
     public interface IBackgroundProcess
     {
         void Start();
+        void Stop();
     }
 }

@@ -52,7 +52,7 @@ namespace Streaming.FuncTests
             var camera = new Mock<ICameraData>();
             camera.SetupGet(t => t.Url).Returns("http://77.22.100.19:88/mjpg/video.mjpg");
             var logger = new Mock<ILogger<VideoConsumer>>();
-            var consumer = new VideoConsumer(camera.Object, logger.Object);
+            var consumer = new VideoConsumer(logger.Object, camera.Object);
             consumer.NewFrame += (sender, e) =>
             {
                 frames.Add(e.Frame);
@@ -61,7 +61,7 @@ namespace Streaming.FuncTests
 
             // ACT
             consumer.Start();
-            await Task.Delay(TimeSpan.FromSeconds(2));
+            await Task.Delay(TimeSpan.FromSeconds(5));
 
             // ASSERT
             Assert.True(frames.Count > 0);
