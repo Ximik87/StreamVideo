@@ -46,7 +46,7 @@ namespace Streaming.UnitTests
         }
 
         [Fact]
-        public  void SetFrameTest()
+        public void SetFrameTest()
         {
             // ARRANGE
             var expectedFrame = new List<Stream>();

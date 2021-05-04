@@ -16,10 +16,10 @@ namespace Streaming.Core
         private readonly int _cameraId;
         public event NewFrameEventHandler NewFrame;
 
-        public VideoConsumer(ICameraData camera, ILoggerFactory logger)
+        public VideoConsumer(ICameraData camera, ILogger<VideoConsumer> logger)
         {
             _url = camera.Url;
-            _logger = logger.CreateLogger<VideoConsumer>();
+            _logger = logger;
             _cameraId = camera.Id;
         }
 
@@ -39,28 +39,26 @@ namespace Streaming.Core
             // todo cancelation toekn ?
             var compensator = new DelayCompensator();
             //Create an HTTP request, as long as the request does not end, MJPEG server will always send real-time image content to the response body of the request
-            var hwRequest = (HttpWebRequest)WebRequest.Create(_url);
-            hwRequest.Method = "GET";
-            var hwResponse = (HttpWebResponse)hwRequest.GetResponse();
-            //Read the separator of each image specified by boundary, DroidCam is: - dcmjpeg
-            string contentType = hwResponse.Headers["Content-Type"];
+            var request = (HttpWebRequest)WebRequest.Create(_url);
+            request.Method = "GET";
+            var response = (HttpWebResponse)request.GetResponse();
+
+            string contentType = response.Headers["Content-Type"];
             string boundryKey = "boundary=";
             string boundary = contentType.Substring(contentType.IndexOf(boundryKey) + boundryKey.Length);
 
             //Get response volume flow
-            Stream stream = hwResponse.GetResponseStream();
+            Stream stream = response.GetResponseStream();
             string headerName = "Content-Length:";
             //Temporary storage of string data
-            StringBuilder sb = new StringBuilder();
-            int readSize = 1024;
+            var sb = new StringBuilder();
             while (_isWorking)
             {
-                //читаем данные построчно
+                // read data line
                 while (true)
                 {
                     char c = (char)stream.ReadByte();
-                    //Console.Write(c);
-                    //log.Write(c);
+                    //_logger.LogTrace(c);
                     if (c == '\n')
                     {
                         break;
@@ -70,62 +68,30 @@ namespace Streaming.Core
                 string line = sb.ToString();
                 Console.WriteLine(line);
                 sb.Remove(0, sb.Length);
-                // ищем header
+                // find header
                 int i = line.IndexOf(headerName);
                 if (i != -1)
                 {
-                    // получим размер jpg
-                    // строка для примера: Content-Length: 289476
+                    // get size jpg
+                    // for example: Content-Length: 289476
                     int imageLength = Convert.ToInt32(line.Substring(i + headerName.Length).Trim());
-                    //Console.WriteLine(line);
+                    _logger.LogTrace(line);
 
-                    // скрипаем символы конеца строки  - \r\n
+                    // skip end line - \r\n
                     stream.Read(new byte[2], 0, 2);
 
-                    // читаем данные jpeg
-                    int total = 0;
+                    // read data jpeg                  
                     var imageToBytes = new byte[imageLength];
-
-                    //while (total < imageLength)
-                    //{
-                    //    if (imageLength - total > readSize)
-                    //    {
-                    //        stream.Read(imageToBytes, total, readSize);
-                    //    }
-                    //    else
-                    //    {
-                    //        stream.Read(imageToBytes, total, imageLength - total);
-                    //    }
-                    //    total += readSize;
-                    //}
-
-                    // alg #2
                     stream.Read(imageToBytes, 0, imageLength);
 
-
-                    // показать хедер и конец
-                    // JPEG The header of the file is: FF D8 FF
-                    // tail FF D9
-                    //Console.WriteLine("file header: {0}{1}{2}",
-                    //    imageToBytes[0].ToString("X"),
-                    //    imageToBytes[1].ToString("X"),
-                    //    imageToBytes[2].ToString("X"));
-                    //Console.WriteLine("tail: {0}{1}",
-                    //    imageToBytes[imageLength - 2].ToString("X"),
-                    //    imageToBytes[imageLength - 1].ToString("X"));
-
-                    //using (FileStream fs = File.Create(@"c:\example.jpg"))
-                    //{
-                    //    fs.Write(imageToBytes, 0, imageLength);
-                    //}
-
-                    if (imageToBytes[imageLength - 2].ToString("X") != "FF" && imageToBytes[imageLength - 1].ToString("X") != "D9")
+                    if (imageToBytes[imageLength - 2].ToString("X") != "FF"
+                        && imageToBytes[imageLength - 1].ToString("X") != "D9")
                     {
                         char l = '0';
                         while (true)
                         {
                             char c = (char)stream.ReadByte();
-                            //Here, only the first two characters in dcmjpeg are judged. When two consecutive characters in the read stream are, it means that the stream has read to the beginning of the next picture
+                            // read stream to next picture
                             if (l == boundary[0] && c == boundary[1])
                             {
                                 break;

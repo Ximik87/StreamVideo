@@ -2,19 +2,20 @@
 {
     public class DelayCompensator
     {
-        int currentDelay = 100;
-        public int Delay => currentDelay;
-        private bool isSecond = false;
+        private int _currentDelay = 100;
+        private int _retryCount = 0;
+        public int Delay => _currentDelay;
+
         public void SetFail()
         {
-            if (isSecond)
+            if (_retryCount >= 3)
             {
-                currentDelay += 50;
-                isSecond = false;
+                _currentDelay += 50;
+                _retryCount = 0;
             }
             else
             {
-                isSecond = true;
+                _retryCount++;
             }
 
         }

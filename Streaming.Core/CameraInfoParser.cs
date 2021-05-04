@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using Microsoft.Extensions.Logging;
+using Streaming.Core.Exceptions;
 using Streaming.Core.Interfaces;
 
 namespace Streaming.Core
@@ -13,8 +15,8 @@ namespace Streaming.Core
 
         public CameraInfoParser(IHtmlContentLoader loader, ILogger<CameraInfoParser> logger)
         {
-            _loader = loader;
-            _logger = logger;
+            _loader = loader ?? throw new ArgumentNullException(nameof(loader));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public IEnumerable<CameraInfo> Parse()
@@ -23,29 +25,36 @@ namespace Streaming.Core
 
             var cameras = new List<CameraInfo>();
             string htmlContent = _loader.GetHtmlContent();
-
-            int startIndex = htmlContent.IndexOf("<div class=\"row thumbnail");
-            var onlyCameraHtmlTags = htmlContent.Substring(startIndex);
-            var endIndex = onlyCameraHtmlTags.IndexOf("<div class=\"textcen");
-            onlyCameraHtmlTags = onlyCameraHtmlTags.Substring(0, endIndex);
-            var doc = XDocument.Parse(onlyCameraHtmlTags);
-            var imageTags = doc.Descendants("img");
-
-            _logger.LogDebug($"Parsed {imageTags.Count()} camera sources");
-
-            int number = 1;
-            foreach (var tag in imageTags)
+            try
             {
-                var title = tag.Attribute("title").Value;
-                var url = tag.Attribute("src").Value;
-                cameras.Add(new CameraInfo
-                {
-                    Id = number,
-                    Title = title,
-                    Url = url
-                });
+                int startIndex = htmlContent.IndexOf("<div class=\"row thumbnail");
+                var onlyCameraHtmlTags = htmlContent.Substring(startIndex);
+                var endIndex = onlyCameraHtmlTags.IndexOf("<div class=\"textcen");
+                onlyCameraHtmlTags = onlyCameraHtmlTags.Substring(0, endIndex);
+                var doc = XDocument.Parse(onlyCameraHtmlTags);
+                var imageTags = doc.Descendants("img");
 
-                number++;
+                _logger.LogDebug($"Parsed {imageTags.Count()} camera sources");
+
+                int number = 1;
+                foreach (var tag in imageTags)
+                {
+                    var title = tag.Attribute("title").Value;
+                    var url = tag.Attribute("src").Value;
+                    cameras.Add(new CameraInfo
+                    {
+                        Id = number,
+                        Title = title,
+                        Url = url
+                    });
+
+                    number++;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception with parsing.");
+                throw new NotParsedContentException();
             }
 
             return cameras;

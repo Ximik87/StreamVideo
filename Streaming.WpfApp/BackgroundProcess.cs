@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using Microsoft.Extensions.Logging;
-using Streaming.Core;
 using Streaming.Core.Interfaces;
 using Streaming.WpfApp.Interfaces;
 using Streaming.WpfApp.Models;
@@ -19,17 +18,18 @@ namespace Streaming.WpfApp
         private readonly ObservableCollection<CameraData> _cameras;
         private readonly List<ISeparateCameraProcess> _consumers;
         private readonly ILinkContainer _linkContainer;
-        private readonly ILoggerFactory _logger;
+        private readonly ISeparateProcessFactory _factory;
 
         public BackgroundProcess(
             IMainWindowViewModel viewModel,
             ILinkContainer linkContainer,
-            ILoggerFactory logger)
+            ISeparateProcessFactory factory
+            )
         {
             _cameras = viewModel.Cameras;
             _linkContainer = linkContainer;
             _consumers = new List<ISeparateCameraProcess>();
-            _logger = logger;
+            _factory = factory;
         }
 
         private void Init()
@@ -53,14 +53,11 @@ namespace Streaming.WpfApp
         {
             Init();
 
-            int i = 0;
             foreach (var camera in _cameras)
             {
-                var videoConsumer = new VideoConsumer(camera, _logger);
-                var separateProcess = new SeparateCameraProcess(videoConsumer, camera);
+                var separateProcess = _factory.Create(camera);
                 separateProcess.Start();
-                _consumers.Add(separateProcess);
-                i++;
+                _consumers.Add(separateProcess);                
             }
         }
     }

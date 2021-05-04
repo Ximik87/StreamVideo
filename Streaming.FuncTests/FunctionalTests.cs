@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Moq;
 using Streaming.Core;
+using Streaming.Core.Interfaces;
 using Xunit;
 
 namespace Streaming.FuncTests
@@ -14,8 +17,10 @@ namespace Streaming.FuncTests
         public void ParserTest_Success()
         {
             // ARRANGE
-            var loader = new HtmlContentLoader();
-            var parser = new CameraInfoParser(loader);
+            var loggerLoader = new Mock<ILogger<HtmlContentLoader>>();
+            var loader = new HtmlContentLoader(loggerLoader.Object);
+            var loggerParser = new Mock<ILogger<CameraInfoParser>>();
+            var parser = new CameraInfoParser(loader, loggerParser.Object);
 
             // ACT
             var result = parser.Parse();
@@ -28,7 +33,8 @@ namespace Streaming.FuncTests
         public void LoaderTest_Success()
         {
             // ARRANGE
-            var loader = new HtmlContentLoader();
+            var loggerLoader = new Mock<ILogger<HtmlContentLoader>>();
+            var loader = new HtmlContentLoader(loggerLoader.Object);
 
             // ACT
             var result = loader.GetHtmlContent();
@@ -43,7 +49,10 @@ namespace Streaming.FuncTests
         {
             // ARRANGE
             var frames = new List<Stream>();
-            var consumer = new VideoConsumer("http://77.22.100.19:88/mjpg/video.mjpg");
+            var camera = new Mock<ICameraData>();
+            camera.SetupGet(t => t.Url).Returns("http://77.22.100.19:88/mjpg/video.mjpg");
+            var logger = new Mock<ILogger<VideoConsumer>>();
+            var consumer = new VideoConsumer(camera.Object, logger.Object);
             consumer.NewFrame += (sender, e) =>
             {
                 frames.Add(e.Frame);

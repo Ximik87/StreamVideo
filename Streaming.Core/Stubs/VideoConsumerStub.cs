@@ -4,18 +4,18 @@ using System.Threading.Tasks;
 using Streaming.Core.Interfaces;
 using Streaming.Core.Properties;
 
-namespace Streaming.Core
+namespace Streaming.Core.Stubs
 {
     public class VideoConsumerStub : IVideoConsumer
     {
         private bool _isWorking = false;
         private Stream _jpegFrame1;
         private Stream _jpegFrame2;
-        public event NewFrameEventHandler NewFrame;
         private int _count = 0;
-        private int _delay = 1;
+        private readonly int _delay = 1;
+        public event NewFrameEventHandler NewFrame;
 
-        public VideoConsumerStub(string url)
+        public VideoConsumerStub()
         {
             _delay = new Random(GetHashCode()).Next(20, 1000);
             Init();

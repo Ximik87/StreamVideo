@@ -49,6 +49,7 @@ namespace Streaming.WpfApp
             services.AddSingleton<ILinkParser, CameraInfoParser>();
             services.AddSingleton<ILinkContainer, LinkContainer>();           
             services.AddSingleton<IBackgroundProcess, BackgroundProcess>();
+            services.AddSingleton<ISeparateProcessFactory, SeparateProcessFactory>();
            
         }
 

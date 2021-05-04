@@ -1,6 +1,4 @@
-﻿using Streaming.Core;
-using Streaming.Core.Interfaces;
-using Streaming.WpfApp.Interfaces;
+﻿using Streaming.WpfApp.Interfaces;
 using Streaming.WpfApp.ViewModels;
 using System;
 using System.Collections.Generic;

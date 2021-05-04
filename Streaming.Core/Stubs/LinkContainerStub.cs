@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using Streaming.Core.Interfaces;
 
-namespace Streaming.Core
+namespace Streaming.Core.Stubs
 {
     public class LinkContainerStub : ILinkContainer
     {
-        private readonly List<CameraInfo> _links = new List<CameraInfo>();
+        private readonly List<CameraInfo> _links = new();
         public IEnumerable<CameraInfo> CameraInfos => _links;
 
         public void GetContent()

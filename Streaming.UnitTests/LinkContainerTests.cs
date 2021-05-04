@@ -9,7 +9,7 @@ namespace Streaming.UnitTests
 {
     public class LinkContainerTests
     {
-        private readonly Fixture _fixture = new Fixture();
+        private readonly Fixture _fixture = new();
 
         [Fact]
         public void GetContentTest_Success()

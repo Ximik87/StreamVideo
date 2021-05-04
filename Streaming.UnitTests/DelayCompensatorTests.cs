@@ -31,7 +31,7 @@ namespace Streaming.UnitTests
             compensator.SetFail();
 
             // ASSERT
-            Assert.Equal(200, compensator.Delay);
+            Assert.Equal(150, compensator.Delay);
         }
     }
 
