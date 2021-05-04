@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Text;
+using Microsoft.Extensions.Logging;
 using Streaming.Core.Interfaces;
 
 namespace Streaming.Core
@@ -9,6 +10,12 @@ namespace Streaming.Core
     public class HtmlContentLoader : IHtmlContentLoader
     {
         private readonly string _url = "http://www.insecam.org/en/bytype/Axis/";
+        private readonly ILogger<HtmlContentLoader> _logger;
+
+        public HtmlContentLoader(ILogger<HtmlContentLoader> logger)
+        {
+            _logger = logger;
+        }
 
         public string GetHtmlContent()
         {
@@ -24,9 +31,9 @@ namespace Streaming.Core
                 htmlContent = readStream.ReadToEnd();
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // todo log this
+                _logger.LogError("Exception in {0}", ex.Message);
             }
 
             return htmlContent;

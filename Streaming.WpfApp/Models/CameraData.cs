@@ -43,6 +43,7 @@ namespace Streaming.WpfApp.Models
         }
 
         public string Url { get; set; }
+        public int Id { get; set; }
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {

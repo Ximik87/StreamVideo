@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Streaming.Core;
 using Streaming.Core.Interfaces;
@@ -16,9 +17,11 @@ namespace Streaming.UnitTests
             var expectedTitle = "View Axis CCTV IP camera online in Germany, Ahaus";
 
             var html = GetHtmlTemplate(expectedTitle, expectedUrl);
+
             var loader = new Mock<IHtmlContentLoader>();
+            var logger = new Mock<ILogger>();
             loader.Setup(t => t.GetHtmlContent()).Returns(html);
-            var parser = new CameraInfoParser(loader.Object);
+            var parser = new CameraInfoParser(loader.Object, logger.Object);
 
             // ACT
             var result = parser.Parse();
@@ -37,9 +40,10 @@ namespace Streaming.UnitTests
             var expectedTitle = "View Axis CCTV IP camera online in Germany, Ahaus";
 
             var html = GetHtmlTemplate(expectedTitle, expectedUrl).Substring(4, 126);
+            var logger = new Mock<ILogger>();
             var loader = new Mock<IHtmlContentLoader>();
             loader.Setup(t => t.GetHtmlContent()).Returns(html);
-            var parser = new CameraInfoParser(loader.Object);
+            var parser = new CameraInfoParser(loader.Object, logger.Object);
 
             // ACT
             var result = parser.Parse();
@@ -48,7 +52,7 @@ namespace Streaming.UnitTests
         }
 
 
-        private string GetHtmlTemplate(string title, string url)
+        private static string GetHtmlTemplate(string title, string url)
         {
             return $@"<div class=""row thumbnail-items"">
                         <div class=""col-xs-12 col-sm-6 col-md-4 col-lg-4"">

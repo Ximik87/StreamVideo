@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using Streaming.Core;
 using Streaming.Core.Interfaces;
 using Streaming.WpfApp.Interfaces;
@@ -22,20 +23,33 @@ namespace Streaming.WpfApp
 
         public App()
         {
+            ConfigureLogger();
+
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
 
             _serviceProvider = serviceCollection.BuildServiceProvider();
         }
 
+        private static void ConfigureLogger()
+        {
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .MinimumLevel.Debug()
+                .WriteTo.File("log.txt")
+                .CreateLogger();
+        }
+
         private void ConfigureServices(IServiceCollection services)
         {
+            services.AddLogging(logger => logger.AddSerilog());
             services.AddSingleton<Views.MainWindow>();
             services.AddSingleton<IMainWindowViewModel,MainWindowViewModel>();
             services.AddSingleton<IHtmlContentLoader, HtmlContentLoader>();
             services.AddSingleton<ILinkParser, CameraInfoParser>();
-            services.AddSingleton<ILinkContainer, LinkContainer>();
+            services.AddSingleton<ILinkContainer, LinkContainer>();           
             services.AddSingleton<IBackgroundProcess, BackgroundProcess>();
+           
         }
 
         private void App_OnStartup(object sender, StartupEventArgs e)

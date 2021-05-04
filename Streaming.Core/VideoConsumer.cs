@@ -3,19 +3,24 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Streaming.Core.Interfaces;
 
 namespace Streaming.Core
 {
     public class VideoConsumer : IVideoConsumer
     {
+        private readonly ILogger<VideoConsumer> _logger;
         private bool _isWorking = false;
         private readonly string _url;
+        private readonly int _cameraId;
         public event NewFrameEventHandler NewFrame;
 
-        public VideoConsumer(string url)
+        public VideoConsumer(ICameraData camera, ILoggerFactory logger)
         {
-            _url = url;
+            _url = camera.Url;
+            _logger = logger.CreateLogger<VideoConsumer>();
+            _cameraId = camera.Id;
         }
 
         public void Start()
@@ -127,13 +132,12 @@ namespace Streaming.Core
                             }
                             l = c;
                         }
-                        Console.WriteLine("--incomplete jpeg, delay: {0}", compensator.Delay);
+                        _logger.LogDebug("For cameraId: {0} invalid jpeg, delay: {1}", _cameraId, compensator.Delay);
                         compensator.SetFail();
                     }
                     else
                     {
                         NewFrame?.Invoke(this, new NewFrameEventArgs(new MemoryStream(imageToBytes)));
-                        Console.WriteLine("complete jpeg");
                     }
 
                     await Task.Delay(compensator.Delay);
