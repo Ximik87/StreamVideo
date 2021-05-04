@@ -79,5 +79,15 @@ namespace Streaming.Core.Properties {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] not_available {
+            get {
+                object obj = ResourceManager.GetObject("not_available", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

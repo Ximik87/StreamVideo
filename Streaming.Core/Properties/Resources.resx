@@ -124,4 +124,7 @@
   <data name="frame2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\frame2.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="not_available" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\not-available.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

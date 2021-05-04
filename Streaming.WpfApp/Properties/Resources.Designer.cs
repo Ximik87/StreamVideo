@@ -69,5 +69,15 @@ namespace Streaming.WpfApp.Properties {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] loading {
+            get {
+                object obj = ResourceManager.GetObject("loading", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

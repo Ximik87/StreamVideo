@@ -6,11 +6,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Streaming.Core.Interfaces;
+using Streaming.Core.Properties;
 
 namespace Streaming.Core
 {
     public class VideoConsumer : IVideoConsumer
     {
+        private const int _maxDelay = 1500;
         private readonly ILogger<VideoConsumer> _logger;
         private readonly string _url;
         private readonly int _cameraId;
@@ -45,56 +47,83 @@ namespace Streaming.Core
 
         private async Task DoWork(CancellationToken token)
         {
-            var compensator = new DelayCompensator();
-            var request = (HttpWebRequest)WebRequest.Create(_url);
-            request.Method = "GET";
-            var response = (HttpWebResponse)request.GetResponse();
-
-            string contentType = response.Headers["Content-Type"];
-            string boundryKey = "boundary=";
-            string boundary = contentType.Substring(contentType.IndexOf(boundryKey) + boundryKey.Length);
-
-            Stream stream = response.GetResponseStream();
-            string headerName = "Content-Length:";
-         
-            while (true)
+            try
             {
-                token.ThrowIfCancellationRequested();
+                var compensator = new DelayCompensator();
+                var request = (HttpWebRequest)WebRequest.Create(_url);
+                request.Method = "GET";
+                var response = (HttpWebResponse)request.GetResponse();
 
-                // read data line
-                string line = ReadToLine(stream);
+                string contentType = response.Headers["Content-Type"];
+                string boundryKey = "boundary=";
+                string boundary = contentType.Substring(contentType.IndexOf(boundryKey) + boundryKey.Length);
 
-                // find header
-                int i = line.IndexOf(headerName);
-                if (i != -1)
+                Stream stream = response.GetResponseStream();
+                string headerName = "Content-Length:";
+
+                while (true)
                 {
-                    // get size jpg
-                    // for example: Content-Length: 289476
-                    int imageLength = Convert.ToInt32(line.Substring(i + headerName.Length).Trim());
-                    _logger.LogTrace(line);
+                    token.ThrowIfCancellationRequested();
 
-                    // skip end line - \r\n
-                    stream.Read(new byte[2], 0, 2);
+                    // read data line
+                    string line = ReadToLine(stream);
 
-                    // read data jpeg                  
-                    var imageToBytes = new byte[imageLength];
-                    stream.Read(imageToBytes, 0, imageLength);
-
-                    if (imageToBytes[imageLength - 2].ToString("X") != "FF"
-                        && imageToBytes[imageLength - 1].ToString("X") != "D9")
+                    // find header
+                    int i = line.IndexOf(headerName);
+                    if (i != -1)
                     {
-                        SetStreamToNextPosition(stream, boundary);
-                        _logger.LogDebug("For cameraId: {0} invalid format jpeg, delay: {1}", _cameraId, compensator.Delay);
-                        compensator.SetFail();
-                    }
-                    else
-                    {
-                        NewFrame?.Invoke(this, new NewFrameEventArgs(new MemoryStream(imageToBytes)));
-                    }
+                        // get size jpg
+                        // for example: Content-Length: 289476
+                        int imageLength = Convert.ToInt32(line.Substring(i + headerName.Length).Trim());
+                        _logger.LogTrace(line);
 
-                    await Task.Delay(compensator.Delay, token);
+                        // skip end line - \r\n
+                        stream.Read(new byte[2], 0, 2);
+
+                        // read data jpeg                  
+                        var imageToBytes = new byte[imageLength];
+                        stream.Read(imageToBytes, 0, imageLength);
+
+                        if (imageToBytes[imageLength - 2].ToString("X") != "FF"
+                            && imageToBytes[imageLength - 1].ToString("X") != "D9")
+                        {
+                            SetStreamToNextPosition(stream, boundary);
+                            _logger.LogDebug("For cameraId: {0} invalid format jpeg, delay: {1}", _cameraId, compensator.Delay);
+                            SetDelayOrUnavailable(compensator);
+                        }
+                        else
+                        {
+                            NewFrame?.Invoke(this, new NewFrameEventArgs(new MemoryStream(imageToBytes)));
+                        }
+
+                        await Task.Delay(compensator.Delay, token);
+                    }
                 }
             }
+            catch (WebException ex)
+            {
+                _logger.LogError(ex, "Exception with get camera stream");
+                SetCameraUnavailable();
+            }
+        }
+
+        private void SetDelayOrUnavailable(DelayCompensator compensator)
+        {
+            if (compensator.Delay < _maxDelay)
+            {
+                compensator.SetFail();
+            }
+            else
+            {
+                SetCameraUnavailable();
+            }
+        }
+
+        private void SetCameraUnavailable()
+        {
+            var image = Resources.not_available;
+            NewFrame?.Invoke(this, new NewFrameEventArgs(new MemoryStream(image)));
+            _cts.Cancel();
         }
 
         private string ReadToLine(Stream stream)
@@ -111,7 +140,7 @@ namespace Streaming.Core
                 sb.Append(c);
             }
             string line = sb.ToString();
-            _logger.LogTrace(line);          
+            _logger.LogTrace(line);
 
             return line;
         }

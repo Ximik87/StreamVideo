@@ -33,7 +33,7 @@ namespace Streaming.WpfApp
         private void Init()
         {
             _linkContainer.GetContent();
-            _emptyFrame = new MemoryStream(Resources.empty);
+            _emptyFrame = new MemoryStream(Resources.loading);
 
             foreach (var item in _linkContainer.CameraInfos)
             {

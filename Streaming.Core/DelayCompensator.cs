@@ -8,9 +8,9 @@
 
         public void SetFail()
         {
-            if (_retryCount >= 3)
+            if (_retryCount >= 2)
             {
-                _currentDelay += 50;
+                _currentDelay += 100;
                 _retryCount = 0;
             }
             else
